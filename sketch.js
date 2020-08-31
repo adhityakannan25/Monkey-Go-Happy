@@ -1,12 +1,14 @@
-var monkey, ground, banana, obstacleGroup, survivalTime, bananaGroup, monkeyImg, bananaImg;
+var monkey, ground, banana, obstacleGroup, survivalTime, bananaGroup, monkeyImg, bananaImg, bg;
 
 function preload(){
 monkeyImg=loadAnimation("Sprites/Monkey1.png","Sprites/Monkey2.png","Sprites/Monkey3.png","Sprites/Monkey4.png","Sprites/Monkey5.png","Sprites/Monkey6.png","Sprites/Monkey7.png","Sprites/Monkey8.png","Sprites/Monkey9.png")
   bananaImg=loadImage("Sprites/banana.png")
   obstacleImg=loadImage("Sprites/stone.png")
+  bgImg=loadImage("Sprites/bg.jpg")
 }
 
 function setup(){
+bg = createSprite(200,200,400,400)
 monkey= createSprite(70,300,20,20)
 ground = createSprite(200,380,400,2)
 
@@ -26,6 +28,14 @@ function draw() {
   background(255);
   
   createEdgeSprites()
+
+  bg.velocityX=-2
+
+  //bg.x=bg.width/10;
+ console.log(bg.x)
+ if(bg.x == -30){
+bg.x=200
+ }
   
   monkey.velocityY=monkey.velocityY+0.8;
   
@@ -34,7 +44,7 @@ function draw() {
   
   ground.velocityX=-3
   
-  obstacleGroup.collide(monkey);
+  //obstacleGroup.collide(monkey);
   
   if (ground.x < 200){
       ground.x = ground.width/2;
@@ -43,7 +53,13 @@ function draw() {
   if (keyDown("space") && monkey.y>330){
     monkey.velocityY=-12
   }
-  
+  if(bananaGroup.isTouching(monkey)){
+    monkey.scale=monkey.scale+0.05
+  }
+  if(obstacleGroup.isTouching(monkey)){
+    monkey.scale=monkey.scale-0.05
+  }
+  bg.addImage(bgImg)
   
   
   if (World.frameCount%80===0){
@@ -72,13 +88,7 @@ function draw() {
   if(bananaGroup.isTouching(monkey)){
     bananaGroup.destroyEach()
   }
-  if(obstacleGroup.isTouching(monkey)){
-   //bananaGroup.velocityX=0;
-  // obstacleGroup.velocityX=0;
-   //survivalTime=survivalTime+0
-
-    text("YOU DIED!!",200,200)
-  }
+  
  
 
   drawSprites() 
