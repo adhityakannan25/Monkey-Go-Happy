@@ -50,14 +50,15 @@ bg.x=200
       ground.x = ground.width/2;
   }
   
-  if (keyDown("space") && monkey.y>330){
+  if (keyDown("space") && monkey.y>200){
     monkey.velocityY=-12
   }
   if(bananaGroup.isTouching(monkey)){
     monkey.scale=monkey.scale+0.05
   }
   if(obstacleGroup.isTouching(monkey)){
-    monkey.scale=monkey.scale-0.05
+    monkey.scale=monkey.scale-0.1
+    obstacleGroup.destroyEach()
   }
   bg.addImage(bgImg)
   
